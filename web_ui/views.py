@@ -15,3 +15,9 @@ def login_view(request):
 
 def profile_view(request):
     return render(request, 'profile.html', {})
+
+def quiz_view(request):
+    return render(request, 'quiz.html', {})
+
+def completed_quiz_view(request):
+    return render(request, "completed_quiz.html", {})

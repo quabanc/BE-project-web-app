@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block header_name %}
-<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{% url 'quiz' %}">Quiz</a>
+<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{% url 'completed_quiz' %}">Completed Quiz</a>
 {% endblock header_name %}
 
 {% block active %}
@@ -50,24 +50,28 @@
                                 <img class="card-img" src="{% static 'img/brand/Quabanc_logo_big.png' %}" style="width: 25rem;" alt="Card image cap">
                             </div>
                             <div class="col-6">
+                                <!-- <span class="badge badge-pill badge-danger">Danger</span> -->
+
                                 <h2 class="mb-0">1) &nbsp;&nbsp; The ____ is laying on the ____. </h2>
                                 <br>
                                 <div class="custom-control custom-radio mb-3">
-                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio5" checked="" type="radio">
+                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio5" disabled="" type="radio">
                                     <label class="custom-control-label" for="customRadio5">Unchecked</label>
                                   </div>
                                 <div class="custom-control custom-radio mb-3">
-                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio6" checked="" type="radio">
+                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio6" disabled="" type="radio">
                                     <label class="custom-control-label" for="customRadio6">Checked</label>
                                   </div>
                                   <div class="custom-control custom-radio mb-3">
-                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio7" checked="" type="radio">
+                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio7" disabled="" type="radio">
                                     <label class="custom-control-label" for="customRadio7">Disabled unchecked</label>
                                   </div>
                                   <div class="custom-control custom-radio mb-3">
-                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio8" checked="" type="radio">
+                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio8" checked="" disabled="" type="radio">
                                     <label class="custom-control-label" for="customRadio8">Disabled checkbox</label>
                                   </div>
+                                  <br>
+                                  <span class="badge badge-pill badge-success">Correct</span>
                             </div>
                         </div>
                     </div>
