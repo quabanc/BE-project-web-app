@@ -19,7 +19,7 @@ from web_ui.views import index_view, profile_view, login_view, register_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('index/', index_view, name="index"),
+    path('', index_view, name="index"),
     path('profile/', profile_view, name="profile"),
     path('login/', login_view, name="login"),
     path('register/', register_view, name="register")
