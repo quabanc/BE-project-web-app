@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block header_name %}
+<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{% url 'index' %}">Dashboard</a>
+{% endblock header_name %}
+
+{% block active %}
+<li class="nav-item  active">
+	<a class="nav-link active" href="{% url 'index' %}">
+		<i class="ni ni-tv-2 text-primary"></i> Dashboard
+	</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link" href="{% url 'profile' %}">
+		<i class="ni ni-single-02 text-yellow"></i> User profile
+	</a>
+</li>
+{% endblock active %}
+
+{% block content %}
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+	<div class="container-fluid">
+		<div class="header-body">
+			<!-- Card stats -->
+		</div>
+	</div>
+</div>
+<div class="container-fluid mt--7">
+	<div class="row mt-5">
+		<div class="col-xl-6 mb-5 mb-xl-0">
+			<div class="card shadow">
+				<div class="card-header border-0">
+					<div class="row align-items-center">
+						<div class="col">
+							<h2 class="mb-0" style="color: #2dce89">Create new Quiz</h2>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="text-align: center;">
+					<div class="col">
+						<span>image1.jpg <i class="ni ni-fat-remove"></i></span>
+					</div>
+				</div>
+				<br>
+				<div class="row" style="text-align: center;">
+					<div class="col">
+						<form>
+							<label class="btn btn-icon btn-primary">
+								<input type="file" style="display: none;">
+								<span class="btn-inner--icon">Upload Image(s) <i class="ni ni-cloud-upload-96"></i></span>
+							</label>
+						</form>
+					</div>
+					<div class="col">
+						<form action="{% url 'created_quiz' %}">
+							<button type="submit" class="btn btn-default">Create</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-6">
+			<div class="card shadow">
+				<div class="card-header border-0">
+					<div class="row align-items-center">
+						<div class="col">
+							<h2 class="mb-0" style="color: #fb6340">Previous Quizzes</h2>
+						</div>
+					</div>
+				</div>
+				<div class="table-responsive">
+					<!-- Projects table -->
+					<table class="table align-items-center table-flush">
+						<tbody>
+							<tr>
+								<th scope="row" style="text-align:center">
+									<a href="{% url 'completed_quiz' %}" class="h3">Quiz 1</a>
+								</th>
+							</tr>
+							<tr>
+								<th scope="row" style="text-align:center">
+									<a href="{% url 'completed_quiz' %}" class="h3">Quiz 2</a>
+								</th>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

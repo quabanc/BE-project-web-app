@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header_name %}
+<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{% url 'quiz' %}">Quiz</a>
+{% endblock header_name %}
+
+{% block active %}
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'index' %}">
+    <i class="ni ni-tv-2 text-primary"></i> Dashboard
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'profile' %}">
+    <i class="ni ni-single-02 text-yellow"></i> User profile
+  </a>
+</li>
+{% endblock active %}
+
+{% block content %}
+    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+        <div class="header-body">
+        <!-- Card stats -->
+        </div>
+    </div>
+    </div>
+    <div class="container-fluid mt--7">
+        <div class="row mt-5">
+            <div class="col-xl-12 mb-5 mb-xl-0">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="display-4" style="color: #fb6340; text-align: center;">Quiz</h2>
+                                <br>
+                                <h3 class="mb-0" style="color: #11cdef; text-align: center;">Total No. of Questions: 10</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-xl-12 mb-5 mb-xl-0">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <img class="card-img" src="{% static 'img/brand/Quabanc_logo_big.png' %}" style="width: 25rem;" alt="Card image cap">
+                            </div>
+                            <div class="col-4">
+                                <h2 class="mb-0">1) &nbsp;&nbsp; The ____ is laying on the ____. </h2>
+                                <br>
+                                <div class="custom-control custom-radio mb-3">
+                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio5" checked="" type="radio">
+                                    <label class="custom-control-label" for="customRadio5">Unchecked</label>
+                                  </div>
+                                <div class="custom-control custom-radio mb-3">
+                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio6" checked="" type="radio">
+                                    <label class="custom-control-label" for="customRadio6">Checked</label>
+                                  </div>
+                                  <div class="custom-control custom-radio mb-3">
+                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio7" checked="" type="radio">
+                                    <label class="custom-control-label" for="customRadio7">Disabled unchecked</label>
+                                  </div>
+                                  <div class="custom-control custom-radio mb-3">
+                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio8" checked="" type="radio">
+                                    <label class="custom-control-label" for="customRadio8">Disabled checkbox</label>
+                                  </div>
+                            </div>
+                            <div class="col-2" style="text-align: center;">
+                                <button class="btn btn-icon btn-danger" type="button">
+                                    <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
