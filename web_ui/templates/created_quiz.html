@@ -34,39 +34,40 @@
                             <div class="col">
                                 <h2 class="display-4" style="color: #fb6340; text-align: center;">Quiz</h2>
                                 <br>
-                                <h3 class="mb-0" style="color: #11cdef; text-align: center;">Total No. of Questions: 10</h3>
+                                <h3 class="mb-0" style="color: #11cdef; text-align: center;">Total No. of Questions: {{ len }}</h3>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        {% for image in images %}
         <div class="row mt-5">
             <div class="col-xl-12 mb-5 mb-xl-0">
                 <div class="card shadow">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-6">
-                                <img class="card-img" src="{% static 'img/brand/Quabanc_logo_big.png' %}" style="width: 25rem;" alt="Card image cap">
+                                <img class="card-img" src="{% static 'img/uploads/' %}{{ image }}" style="width: 25rem;" alt="Card image cap">
                             </div>
                             <div class="col-4">
                                 <h2 class="mb-0">1) &nbsp;&nbsp; The ____ is laying on the ____. </h2>
                                 <br>
                                 <div class="custom-control custom-radio mb-3">
-                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio5" checked="" type="radio">
-                                    <label class="custom-control-label" for="customRadio5">Unchecked</label>
+                                    <input name="custom-radio-{{ forloop.counter }}2" class="custom-control-input" id="customRadio{{ forloop.counter }}1" checked="" type="radio">
+                                    <label class="custom-control-label" for="customRadio{{ forloop.counter }}1">Unchecked</label>
                                   </div>
                                 <div class="custom-control custom-radio mb-3">
-                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio6" checked="" type="radio">
-                                    <label class="custom-control-label" for="customRadio6">Checked</label>
+                                    <input name="custom-radio-{{ forloop.counter }}2" class="custom-control-input" id="customRadio{{ forloop.counter }}2" checked="" type="radio">
+                                    <label class="custom-control-label" for="customRadio{{ forloop.counter }}2">Checked</label>
                                   </div>
                                   <div class="custom-control custom-radio mb-3">
-                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio7" checked="" type="radio">
-                                    <label class="custom-control-label" for="customRadio7">Disabled unchecked</label>
+                                    <input name="custom-radio-{{ forloop.counter }}2" class="custom-control-input" id="customRadio{{ forloop.counter }}3" checked="" type="radio">
+                                    <label class="custom-control-label" for="customRadio{{ forloop.counter }}3">Disabled unchecked</label>
                                   </div>
                                   <div class="custom-control custom-radio mb-3">
-                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio8" checked="" type="radio">
-                                    <label class="custom-control-label" for="customRadio8">Disabled checkbox</label>
+                                    <input name="custom-radio-{{ forloop.counter }}2" class="custom-control-input" id="customRadio{{ forloop.counter }}4" checked="" type="radio">
+                                    <label class="custom-control-label" for="customRadio{{ forloop.counter }}4">Disabled checkbox</label>
                                   </div>
                             </div>
                             <div class="col-2" style="text-align: center;">
@@ -79,5 +80,6 @@
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 {% endblock content %}
