@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Image
+import requests
 # Create your views here.
 
 
@@ -31,15 +32,16 @@ def completed_quiz_view(request):
 def created_quiz_view(request):
     images = dict(request.FILES)['images']
     model = Image()
+    captions = []
+    url = 'http://127.0.0.1:5000/upload'
+
 
     for i in images:
         model.image = i
         model.save()
+        file = {'image': open(model.image.url[7:], 'rb')}
+        res = requests.post(url, files=file)
+        caption = res.json()['caption']
+        captions.append(caption)
     
-    
-    return render(request, "created_quiz.html", {'images': images, 'len': len(images)})
-
-def upload_files(request):
-    
-    
-    return render(request, "index.html", {})
+    return render(request, "created_quiz.html", {'images': zip(images, captions), 'len': len(images)})
