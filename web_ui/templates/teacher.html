@@ -83,7 +83,7 @@
 			<div class="card-header border-0">
 				<div class="row align-items-center">
 					<div class="col">
-						<h2 class="mb-0" style="color: #fb6340">Previous Quizzes</h2>
+						<h2 class="mb-0" style="color: #fb6340">Uploaded Quizzes</h2>
 					</div>
 				</div>
 			</div>
@@ -91,16 +91,13 @@
 				<!-- Projects table -->
 				<table class="table align-items-center table-flush">
 					<tbody>
+						{% for quiz in quizes %}
 						<tr>
 							<th scope="row" style="text-align:center">
-								<a href="{% url 'completed_quiz' %}" class="h3">Quiz 1</a>
+								<a href="uploaded_quiz/{{ quiz.quiz_name }}" class="h3">{{ quiz.quiz_name }}</a>
 							</th>
 						</tr>
-						<tr>
-							<th scope="row" style="text-align:center">
-								<a href="{% url 'completed_quiz' %}" class="h3">Quiz 2</a>
-							</th>
-						</tr>
+						{% endfor %}
 					</tbody>
 				</table>
 			</div>

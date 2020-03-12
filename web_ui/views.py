@@ -14,7 +14,8 @@ def index_view(request):
         template = 'index.html'
     elif user.user_type == 'TEACHER':
         template = 'teacher.html'
-
+        quizes = Quiz.objects.all()
+        return render(request, template, {"quizes": quizes})
     return render(request, template, {})
 
 
@@ -116,5 +117,19 @@ def created_quiz_view(request):
                 print(options)
             quiz_model.save()
             
-            return render(request, "created_quiz.html", {'images': zip(images, captions, options_all), 'len': len(images)})
+            return redirect("uploaded_quiz", quiz_name=quiz_model.quiz_name)
+            # return render(request, "created_quiz.html", {'images': zip(images, captions, options_all), 'len': len(images)})
     return redirect("index")
+
+
+@login_required
+def uploaded_quiz(request, quiz_name):
+    quiz = Quiz.objects.get(quiz_name=quiz_name)
+    questions = {}
+    for question in quiz.questions.all():
+        questions[question.id] = {
+            "caption": question.caption,
+            "image": question.image[14:],
+            "options": question.options.all()
+        }
+    return render(request, "uploaded_quiz.html", {"quiz_name": quiz_name, "questions": questions})

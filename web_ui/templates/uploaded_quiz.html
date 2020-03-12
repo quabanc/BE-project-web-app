@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+{% block header_name %}
+<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{% url 'completed_quiz' %}">Completed Quiz</a>
+{% endblock header_name %}
+
+{% block active %}
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'index' %}">
+    <i class="ni ni-tv-2 text-primary"></i> Dashboard
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'profile' %}">
+    <i class="ni ni-single-02 text-yellow"></i> User profile
+  </a>
+</li>
+{% endblock active %}
+
+{% block content %}
+    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+        <div class="header-body">
+        <!-- Card stats -->
+        </div>
+    </div>
+    </div>
+    <div class="container-fluid mt--7">
+        <div class="row mt-5">
+            <div class="col-xl-12 mb-5 mb-xl-0">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h2 class="display-4" style="color: #fb6340; text-align: center;">{{ quiz_name }}</h2>
+                                <br>
+                                <h3 class="mb-0" style="color: #11cdef; text-align: center;">Total No. of Questions: {{ questions | length }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% for question, values in questions.items %}
+        <div class="row mt-5">
+            <div class="col-xl-12 mb-5 mb-xl-0">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <img class="card-img" src="{% static '' %}{{ values.image }}" style="width: 25rem;" alt="Card image cap">
+                            </div>
+                            <div class="col-6">
+                                <!-- <span class="badge badge-pill badge-danger">Danger</span> -->
+
+                                <h2 class="mb-0">{{ forloop.counter }}) &nbsp;&nbsp; {{ values.caption }} </h2>
+                                <br>
+                                {% for option in values.options %}
+                                    {% if option.correct %}
+                                        <div class="custom-control custom-radio mb-3">
+                                            <input name="custom-radio-{{forloop.parentloop.counter}}" class="custom-control-input" id="customRadio{{forloop.parentloop.counter}}{{ forloop.counter }}" checked="" disabled="" type="radio">
+                                            <label class="custom-control-label" for="customRadio{{forloop.parentloop.counter}}{{ forloop.counter }}">{{ option.option }}</label>
+                                        </div>
+                                    {% else %}
+                                        <div class="custom-control custom-radio mb-3">
+                                            <input name="custom-radio-{{forloop.parentloop.counter}}" class="custom-control-input" id="customRadio{{forloop.parentloop.counter}}{{ forloop.counter }}" disabled="" type="radio">
+                                            <label class="custom-control-label" for="customRadio{{forloop.parentloop.counter}}{{ forloop.counter }}">{{ option.option }}</label>
+                                        </div>
+                                    {% endif %}
+                                {% endfor  %}
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

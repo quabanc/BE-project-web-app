@@ -26,7 +26,7 @@ class Question(models.Model):
 
 
 class Quiz(models.Model):
-    quiz_name = models.CharField(max_length=250)
+    quiz_name = models.CharField(max_length=250, unique=True)
     questions = models.ManyToManyField(Question)
 
     def __str__(self):
