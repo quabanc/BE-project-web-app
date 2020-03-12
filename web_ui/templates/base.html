@@ -120,10 +120,10 @@
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
-            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link pr-0" href="{% url 'profile' %}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="media align-items-center">
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
+                  <span class="mb-0 text-sm  font-weight-bold">{{ request.user.first_name }} {{ request.user.last_name }}</span>
                 </div>
               </div>
             </a>
