@@ -49,6 +49,19 @@
 				<br>
 				<form method='POST' action="{% url 'created_quiz' %}" enctype="multipart/form-data">
 					{% csrf_token %}
+
+					<div class="row" style="text-align: center;">
+						<div class="col-lg-1">
+
+						</div>
+						<div class="col-lg-10">
+							<div class="form-group">
+								<div class="input-group input-group-alternative">
+								  <input class="form-control" placeholder="Quiz Name" type="text" name="quiz_name" required>
+								</div>
+							</div>
+						</div>
+					</div>
 					<div class="row" style="text-align: center;">
 						<div class="col">
 							<label class="btn btn-icon btn-primary">

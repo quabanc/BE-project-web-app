@@ -41,7 +41,7 @@
                 </div>
             </div>
         </div>
-        {% for image, caption in images %}
+        {% for image, caption, options_all in images %}
         <div class="row mt-5">
             <div class="col-xl-12 mb-5 mb-xl-0">
                 <div class="card shadow">
@@ -55,25 +55,20 @@
                                 <br>
                                 <div class="custom-control custom-radio mb-3">
                                     <input name="custom-radio-{{ forloop.counter }}2" class="custom-control-input" id="customRadio{{ forloop.counter }}1" checked="" type="radio">
-                                    <label class="custom-control-label" for="customRadio{{ forloop.counter }}1">Option 1</label>
+                                    <label class="custom-control-label" for="customRadio{{ forloop.counter }}1">{{ options_all.0.0 }}</label>
                                   </div>
                                 <div class="custom-control custom-radio mb-3">
                                     <input name="custom-radio-{{ forloop.counter }}2" class="custom-control-input" id="customRadio{{ forloop.counter }}2" checked="" type="radio">
-                                    <label class="custom-control-label" for="customRadio{{ forloop.counter }}2">Option 2</label>
+                                    <label class="custom-control-label" for="customRadio{{ forloop.counter }}2">{{ options_all.1.0 }}</label>
                                   </div>
                                   <div class="custom-control custom-radio mb-3">
                                     <input name="custom-radio-{{ forloop.counter }}2" class="custom-control-input" id="customRadio{{ forloop.counter }}3" checked="" type="radio">
-                                    <label class="custom-control-label" for="customRadio{{ forloop.counter }}3">Option 3</label>
+                                    <label class="custom-control-label" for="customRadio{{ forloop.counter }}3">{{ options_all.2.0 }}</label>
                                   </div>
                                   <div class="custom-control custom-radio mb-3">
                                     <input name="custom-radio-{{ forloop.counter }}2" class="custom-control-input" id="customRadio{{ forloop.counter }}4" checked="" type="radio">
-                                    <label class="custom-control-label" for="customRadio{{ forloop.counter }}4">Option 4</label>
+                                    <label class="custom-control-label" for="customRadio{{ forloop.counter }}4">{{ options_all.3.0 }}</label>
                                   </div>
-                            </div>
-                            <div class="col-1" style="text-align: center;">
-                                <button class="btn btn-icon btn-danger" type="button">
-                                    <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
-                                </button>
                             </div>
                         </div>
                     </div>

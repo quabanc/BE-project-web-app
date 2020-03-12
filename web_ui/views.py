@@ -3,10 +3,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import User
-from web_ui.models import MultiUser
-from .models import Image
+from web_ui.models import MultiUser, Image, Option, Question, Quiz
 import requests
-# Create your views here.
 
 
 @login_required
@@ -79,19 +77,44 @@ def created_quiz_view(request):
     user = MultiUser.objects.get(email=request.user.username)
 
     if user.user_type == "TEACHER":
-        images = dict(request.FILES)['images']
-        model = Image()
-        captions = []
-        url = 'http://127.0.0.1:5000/upload'
+        if request.POST:
+            quiz_name = request.POST["quiz_name"]
+            quiz_model = Quiz.objects.create(quiz_name=quiz_name)
+
+            images = dict(request.FILES)['images']
+            captions = []
+            options_all = []
+            url = 'http://127.0.0.1:5000/upload'
 
 
-        for i in images:
-            model.image = i
-            model.save()
-            file = {'image': open(model.image.url[7:], 'rb')}
-            res = requests.post(url, files=file)
-            caption = res.json()['caption']
-            captions.append(caption)
-        
-        return render(request, "created_quiz.html", {'images': zip(images, captions), 'len': len(images)})
+            for image in images:
+                image_model = Image(image=image)
+                image_model.save()
+                file = {'image': open(image_model.image.url[7:], 'rb')}
+                res = requests.post(url, files=file)
+                
+                caption = res.json()['caption']
+                options = res.json()['options']
+
+                # Database stuff
+                question_model = Question.objects.create(
+                    image=image_model.image.url[7:],
+                    caption=caption
+                )
+                for option in options:
+                    option_model = Option.objects.create(
+                        option=option[0],
+                        correct=option[1]["correct"]
+                    )
+                    question_model.options.add(option_model)
+                    option_model.save()
+                question_model.save()
+                quiz_model.questions.add(question_model)
+
+                captions.append(caption)
+                options_all.append(options)
+                print(options)
+            quiz_model.save()
+            
+            return render(request, "created_quiz.html", {'images': zip(images, captions, options_all), 'len': len(images)})
     return redirect("index")
