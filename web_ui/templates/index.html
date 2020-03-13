@@ -45,17 +45,14 @@
             <!-- Projects table -->
             <table class="table align-items-center table-flush">
               <tbody>
-                <tr>
-                  <th scope="row" style="text-align:center">
-                    <a href="{% url 'quiz' %}" class="h3">Quiz 3</a>
-                  </th>
-                </tr>
-                <tr>
-                  <th scope="row" style="text-align:center">
-                    <a href="{% url 'quiz' %}" class="h3">Quiz 4</a>
-                  </th>
-                </tr>
-              </tbody>
+                {% for quiz in quiz_pending %}
+                  <tr>
+                    <th scope="row" style="text-align:center">
+                      <a href="pending_quiz/{{ quiz.quiz_name }}" class="h3">{{ quiz.quiz_name }}</a>
+                    </th>
+                  </tr>
+                {% endfor %}
+                </tbody>
             </table>
           </div>
         </div>
@@ -73,16 +70,13 @@
             <!-- Projects table -->
             <table class="table align-items-center table-flush">
               <tbody>
-                <tr>
-                  <th scope="row" style="text-align:center">
-                    <a href="{% url 'completed_quiz' %}" class="h3">Quiz 1</a>
-                  </th>
-                </tr>
-                <tr>
-                  <th scope="row" style="text-align:center">
-                    <a href="{% url 'completed_quiz' %}" class="h3">Quiz 2</a>
-                  </th>
-                </tr>
+                {% for quiz in quiz_completed %}
+                  <tr>
+                    <th scope="row" style="text-align:center">
+                      <a href="#" class="h3">{{ quiz.quiz_name }}</a>
+                    </th>
+                  </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>

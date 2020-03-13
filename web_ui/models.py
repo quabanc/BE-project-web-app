@@ -33,6 +33,23 @@ class Quiz(models.Model):
         return self.quiz_name
 
 
+class QuestionsCompleted(models.Model):
+    question = models.OneToOneField(Question, on_delete=models.CASCADE)
+    option_selected = models.TextField(blank=False)
+    correct = models.BooleanField(blank=False)
+
+    def __str__(self):
+        return self.question.caption
+
+
+class QuizCompleted(models.Model):
+    quiz = models.OneToOneField(Quiz, on_delete=models.CASCADE)
+    questions_completed = models.ManyToManyField(QuestionsCompleted, blank=True)
+
+    def __str__(self):
+        return self.quiz.quiz_name
+
+
 class MultiUser(User):
     USER_TYPE_CHOICES = (
         ("STUDENT", "STUDENT"),
@@ -43,6 +60,8 @@ class MultiUser(User):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
+    # For Students Only.
+    quiz_completed = models.ManyToManyField(QuizCompleted, blank=True)
 
     def __str__(self):
         return self.email + " - " + self.user_type

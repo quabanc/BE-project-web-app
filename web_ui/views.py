@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import User
-from web_ui.models import MultiUser, Image, Option, Question, Quiz
+from web_ui.models import MultiUser, Image, Option, Question, Quiz, QuizCompleted, QuestionsCompleted
 import requests
 
 
@@ -12,6 +12,16 @@ def index_view(request):
     user = MultiUser.objects.get(email=request.user.username)
     if user.user_type == 'STUDENT':
         template = 'index.html'
+
+        # Quizes completed by the user
+        quiz_completed = [quiz.quiz for quiz in user.quiz_completed.all()]
+        quiz_pending = []
+        all_quizes = list(Quiz.objects.all())
+        for quiz in all_quizes:
+            if quiz not in quiz_completed:
+                quiz_pending.append(quiz)
+
+        return render(request, template, {"quiz_completed": quiz_completed, "quiz_pending": quiz_pending})
     elif user.user_type == 'TEACHER':
         template = 'teacher.html'
         quizes = Quiz.objects.all()
@@ -133,3 +143,33 @@ def uploaded_quiz(request, quiz_name):
             "options": question.options.all()
         }
     return render(request, "uploaded_quiz.html", {"quiz_name": quiz_name, "questions": questions})
+
+
+@login_required
+def pending_quiz(request, quiz_name):
+    quiz = Quiz.objects.get(quiz_name=quiz_name)
+
+    if request.POST:
+        question_answers = dict(request.POST)
+        del question_answers["csrfmiddlewaretoken"]
+
+        quiz_completed = QuizCompleted.objects.create(quiz=quiz)
+        for caption in question_answers:
+            question = quiz.questions.get(caption=caption)
+            option_selected = question_answers[caption][0]
+            correct = question.options.get(option=option_selected).correct
+            
+            question_completed = QuestionsCompleted.objects.create(
+                question=question,
+                option_selected=option_selected,
+                correct=correct
+            )
+            question_completed.save()
+            quiz_completed.questions_completed.add(question_completed)
+        quiz_completed.save()
+        user = MultiUser.objects.get(email=request.user.username)
+        user.quiz_completed.add(quiz_completed)
+        user.save()
+
+        return redirect("index")
+    return render(request, "pending_quiz.html", {"quiz": quiz})

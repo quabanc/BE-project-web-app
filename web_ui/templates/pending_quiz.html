@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header_name %}
+<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{% url 'quiz' %}">Quiz</a>
+{% endblock header_name %}
+
+{% block active %}
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'index' %}">
+    <i class="ni ni-tv-2 text-primary"></i> Dashboard
+  </a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'profile' %}">
+    <i class="ni ni-single-02 text-yellow"></i> User profile
+  </a>
+</li>
+{% endblock active %}
+
+{% block content %}
+    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+        <div class="header-body">
+        <!-- Card stats -->
+        </div>
+    </div>
+    </div>
+    <form method='POST'>
+        {% csrf_token %}
+        <div class="container-fluid mt--7">
+            <div class="row mt-5">
+                <div class="col-xl-12 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="display-4" style="color: #fb6340; text-align: center;">{{ quiz.quiz_name }}</h2>
+                                    <br>
+                                    <h3 class="mb-0" style="color: #11cdef; text-align: center;">Total No. of Questions: {{ quiz.questions.all | length }}</h3>
+                                    <div class="col mt-3" style="text-align: center;">
+                                        <button type="submit" class="btn btn-default">Submit Test</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% for question in quiz.questions.all %}
+            <div class="row mt-5">
+                <div class="col-xl-12 mb-5 mb-xl-0">
+                    <div class="card shadow">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col-6">
+                                    <img class="card-img" src="{{ question.image|slice:'6:' }}" style="width: 25rem;" alt="Card image cap">
+                                </div>
+                                <div class="col-5">
+                                    <h3 class="mb-0">{{ forloop.counter }}) &nbsp;&nbsp; {{ question.caption }} </h3>
+                                    <br>
+                                    {% for option in question.options.all %}
+                                        {% if forloop.counter == 1 %}
+                                            <div class="custom-control custom-radio mb-3">
+                                                <input name="{{ question.caption }}" class="custom-control-input" id="customRadio{{forloop.parentloop.counter}}{{ forloop.counter }}" value="{{ option.option }}" checked="" type="radio">
+                                                <label class="custom-control-label" for="customRadio{{forloop.parentloop.counter}}{{ forloop.counter }}">{{ option.option }}</label>
+                                            </div>
+                                        {% else %}
+                                            <div class="custom-control custom-radio mb-3">
+                                                <input name="{{ question.caption }}" class="custom-control-input" id="customRadio{{forloop.parentloop.counter}}{{ forloop.counter }}" value="{{ option.option }}" type="radio">
+                                                <label class="custom-control-label" for="customRadio{{forloop.parentloop.counter}}{{ forloop.counter }}">{{ option.option }}</label>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor  %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </form>
+{% endblock content %}
