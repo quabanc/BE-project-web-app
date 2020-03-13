@@ -16,8 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from web_ui.views import (index_view, profile_view, login_view, logout_view,
-                          register_view, quiz_view, completed_quiz_view, created_quiz_view,
-                          uploaded_quiz, pending_quiz)
+                          register_view, quiz_view, created_quiz_view, uploaded_quiz, 
+                          pending_quiz, completed_quiz)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,8 +27,8 @@ urlpatterns = [
     path('logout/', logout_view, name="logout"),
     path('register/', register_view, name="register"),
     path('quiz/', quiz_view, name="quiz"),
-    path('completed_quiz/', completed_quiz_view, name="completed_quiz"),
     path('created_quiz/', created_quiz_view, name="created_quiz"),
     path('uploaded_quiz/<str:quiz_name>/', uploaded_quiz, name="uploaded_quiz"),
     path('pending_quiz/<str:quiz_name>/', pending_quiz, name="pending_quiz"),
+    path('completed_quiz/<str:quiz_name>/', completed_quiz, name="completed_quiz"),
 ]

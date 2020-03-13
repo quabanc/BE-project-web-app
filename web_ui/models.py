@@ -34,7 +34,7 @@ class Quiz(models.Model):
 
 
 class QuestionsCompleted(models.Model):
-    question = models.OneToOneField(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     option_selected = models.TextField(blank=False)
     correct = models.BooleanField(blank=False)
 
@@ -43,7 +43,7 @@ class QuestionsCompleted(models.Model):
 
 
 class QuizCompleted(models.Model):
-    quiz = models.OneToOneField(Quiz, on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     questions_completed = models.ManyToManyField(QuestionsCompleted, blank=True)
 
     def __str__(self):

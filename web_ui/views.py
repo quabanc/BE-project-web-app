@@ -79,11 +79,6 @@ def quiz_view(request):
 
 
 @login_required
-def completed_quiz_view(request):
-    return render(request, "completed_quiz.html", {})
-
-
-@login_required
 def created_quiz_view(request):
     user = MultiUser.objects.get(email=request.user.username)
 
@@ -173,3 +168,22 @@ def pending_quiz(request, quiz_name):
 
         return redirect("index")
     return render(request, "pending_quiz.html", {"quiz": quiz})
+
+
+@login_required
+def completed_quiz(request, quiz_name):
+    quiz = Quiz.objects.get(quiz_name=quiz_name)
+    quiz_completed = MultiUser.objects.get(email=request.user.username).quiz_completed.get(quiz=quiz)
+    questions_completed = quiz_completed.questions_completed.all()
+    total_correct = 0
+    correct_options = []
+    for question in questions_completed:
+        if question.correct:
+            total_correct += 1
+    
+        options = question.question.options.all()
+        for option in options:
+            if option.correct:
+                correct_options.append(option.option)
+
+    return render(request, "completed_quiz.html", {"quiz": quiz, "total_correct": total_correct, "questions_completed": list(questions_completed), "correct_options":correct_options})

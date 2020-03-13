@@ -1,7 +1,8 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
+{% load index %}
 {% block header_name %}
-<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{% url 'completed_quiz' %}">Completed Quiz</a>
+<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{% url 'quiz' %}">Quiz</a>
 {% endblock header_name %}
 
 {% block active %}
@@ -15,6 +16,11 @@
     <i class="ni ni-single-02 text-yellow"></i> User profile
   </a>
 </li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout' %}">
+      <i class="ni ni-single-02 text-red"></i> Logout
+    </a>
+  </li>
 {% endblock active %}
 
 {% block content %}
@@ -32,51 +38,58 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h2 class="display-4" style="color: #fb6340; text-align: center;">Quiz</h2>
+                                <h2 class="display-4" style="color: #fb6340; text-align: center;">{{ quiz.quiz_name }}</h2>
                                 <br>
-                                <h3 class="mb-0" style="color: #11cdef; text-align: center;">Total No. of Questions: 10</h3>
+                                <h3 class="mb-0" style="color: #11cdef; text-align: center;">Total No. of Questions: {{ quiz.questions.all | length }}</h3>
+                                <br>
+                                <h3 class="mb-0" style="color: green; text-align: center;">Total No. of Questions Correct: {{ total_correct }} out of {{ quiz.questions.all | length }}</h3>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        {% for question in quiz.questions.all %}
         <div class="row mt-5">
             <div class="col-xl-12 mb-5 mb-xl-0">
                 <div class="card shadow">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-6">
-                                <img class="card-img" src="{% static 'img/brand/Quabanc_logo_big.png' %}" style="width: 25rem;" alt="Card image cap">
+                                <img class="card-img" src="{{ question.image|slice:'6:' }}" style="width: 25rem;" alt="Card image cap">
                             </div>
-                            <div class="col-6">
-                                <!-- <span class="badge badge-pill badge-danger">Danger</span> -->
-
-                                <h2 class="mb-0">1) &nbsp;&nbsp; The ____ is laying on the ____. </h2>
+                            <div class="col-5">
+                                <h3 class="mb-0">{{ forloop.counter }}) &nbsp;&nbsp; {{ question.caption }} </h3>
                                 <br>
-                                <div class="custom-control custom-radio mb-3">
-                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio5" disabled="" type="radio">
-                                    <label class="custom-control-label" for="customRadio5">Unchecked</label>
-                                  </div>
-                                <div class="custom-control custom-radio mb-3">
-                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio6" disabled="" type="radio">
-                                    <label class="custom-control-label" for="customRadio6">Checked</label>
-                                  </div>
-                                  <div class="custom-control custom-radio mb-3">
-                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio7" disabled="" type="radio">
-                                    <label class="custom-control-label" for="customRadio7">Disabled unchecked</label>
-                                  </div>
-                                  <div class="custom-control custom-radio mb-3">
-                                    <input name="custom-radio-2" class="custom-control-input" id="customRadio8" checked="" disabled="" type="radio">
-                                    <label class="custom-control-label" for="customRadio8">Disabled checkbox</label>
-                                  </div>
-                                  <br>
-                                  <span class="badge badge-pill badge-success">Correct</span>
+                                {% with question_completed=questions_completed|index:forloop.counter0 %}
+                                    {% for option in question.options.all %}
+                                        {% if question_completed.option_selected == option.option %}
+                                            <div class="custom-control custom-radio mb-3">
+                                                <input name="{{ question.caption }}" class="custom-control-input" id="customRadio{{forloop.parentloop.counter}}{{ forloop.counter }}" value="{{ option.option }}" checked="" disabled type="radio">
+                                                <label class="custom-control-label" for="customRadio{{forloop.parentloop.counter}}{{ forloop.counter }}">{{ option.option }}</label>
+                                            </div>
+                                        {% else %}
+                                            <div class="custom-control custom-radio mb-3">
+                                                <input name="{{ question.caption }}" class="custom-control-input" id="customRadio{{forloop.parentloop.counter}}{{ forloop.counter }}" value="{{ option.option }}" disabled type="radio">
+                                                <label class="custom-control-label" for="customRadio{{forloop.parentloop.counter}}{{ forloop.counter }}">{{ option.option }}</label>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor  %}
+                                    <br>
+                                    {% if question_completed.correct %}
+                                        <span class="badge badge-pill badge-success">Correct</span>
+                                    {% else %}
+                                        <span class="badge badge-pill badge-danger">Wrong</span>
+                                        <br><br>
+                                        <b>Correct Option was:</b> &emsp; {{ correct_options|index:forloop.counter0 }}
+                                    {% endif %}
+                                {% endwith %}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 {% endblock content %}

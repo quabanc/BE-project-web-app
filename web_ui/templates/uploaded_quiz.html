@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block header_name %}
-<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{% url 'completed_quiz' %}">Completed Quiz</a>
+<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="#">Completed Quiz</a>
 {% endblock header_name %}
 
 {% block active %}
@@ -15,6 +15,11 @@
     <i class="ni ni-single-02 text-yellow"></i> User profile
   </a>
 </li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'logout' %}">
+      <i class="ni ni-single-02 text-red"></i> Logout
+    </a>
+  </li>
 {% endblock active %}
 
 {% block content %}
